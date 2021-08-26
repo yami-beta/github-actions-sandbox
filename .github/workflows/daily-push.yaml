@@ -1,0 +1,21 @@
+name: daily-push
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  daily-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          git config --global user.email "${GIT_AUTHOR_EMAIL}"
+          git config --global user.name "${GIT_AUTHOR_NAME}"
+          git switch -c staging
+          git push --force-with-lease origin staging
+        env:
+          GIT_AUTHOR_NAME: ${{ github.actor }}
+          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
+
