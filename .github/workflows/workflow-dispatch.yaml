@@ -1,0 +1,17 @@
+name: workflow-dispatch
+
+on: workflow_dispatch
+
+jobs:
+  create-version-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          BODY="$(cat LICENSE)"
+          echo 'BODY<<BODY_EOS' >> $GITHUB_ENV
+          echo ${BODY} >> $GITHUB_ENV
+          echo 'BODY_EOS' >> $GITHUB_ENV
+      - run: |
+          echo "${{ env.BODY }}"
