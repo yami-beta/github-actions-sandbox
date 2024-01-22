@@ -1,0 +1,24 @@
+name: pr-merge-head
+
+on:
+  pull_request:
+    branches:
+      - "pr/**"
+    types: [closed]
+
+jobs:
+  pr-merge-head:
+    if: github.event.pull_request.merged == true
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+          echo "github.head_ref"
+          echo ${{ github.head_ref }}
+          echo "github.base_ref"
+          echo ${{ github.base_ref }}
+          echo "github.ref"
+          echo ${{ github.ref }}
+          echo "github.ref_name"
+          echo ${{ github.ref_name }}
